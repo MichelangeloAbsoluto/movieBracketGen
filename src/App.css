@@ -48,6 +48,16 @@
   word-wrap: break-word;
 }
 
+.matchup {
+  background: #808000;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 10px;
+  width: 300px;
+  margin: 16px;
+  float: left;
+}
+
 footer {
   position: absolute;
   text-align: center;

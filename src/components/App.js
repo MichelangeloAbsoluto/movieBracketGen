@@ -5,9 +5,10 @@ import '../App.css';
 import Movie from "./Movie.jsx";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
+import Bracket from "./Bracket.jsx";
 
 // -- A hardcoded list of movies to use -- //
-let movieList = [
+const movieList = [
   {title: "Boogie Nights", year: 1997},
   {title: "The Notebook", year: 2004},
   {title: "Zoolander", year: 2001},
@@ -26,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-     { movieList.map((movie) =>  <Movie  title={movie.title} year={movie.year}/> ) }
+      <Bracket items={movieList}/>
       <Footer />
     </div>
   );
