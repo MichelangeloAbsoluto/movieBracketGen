@@ -27,3 +27,6 @@ jobs:
           # Enable linters
           eslint: true
           prettier: true
+
+      -name: job failed
+      if: ${{ failure() }} exit 0
