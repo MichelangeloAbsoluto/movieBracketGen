@@ -2,7 +2,7 @@ import React from "react";
 import Matchup from "./Matchup.jsx";
 
 // Bracket creates one matchup for every two movies
-// Bracket sends the two movies as an array of two movie objects [{movie}, {movie}]
+// Bracket sends the two movies as an array of two movie objects [ {movie}, {movie} ]
 // React doesn't allow you to pass Javascript objects for whatever reason.  
 
 function Bracket(props){

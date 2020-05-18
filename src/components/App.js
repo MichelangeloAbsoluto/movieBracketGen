@@ -17,7 +17,7 @@ const movieList = [
   {title: "Goodfellas", year: 1990},
   {title: "Gladiator", year: 2000},
   {title: "Sisterhood of the Traveling Pants", year: 2005},
-  {title: "Sisterhood of the Traveling Pants", year: 2008},
+  {title: "Sisterhood of the Traveling Pants 2", year: 2008},
   {title: "In the Mood For Love", year: 2000},
   {title: "Carlito's Way", year: 1993},
   {title: "Lord of the Rings: The Return of the King", year: 2003}
