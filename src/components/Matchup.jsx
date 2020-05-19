@@ -34,15 +34,7 @@ function Matchup(props){
         setBottomPoints( prevCount => prevCount + 1);
     }
 
-    // DOES NOT handle ties. 
-    function calculateWinner(){
-        if (topPoints > bottomPoints){
-            console.log("The winner is " + props.entries[0].title);
-        } else {
-            console.log("The winner is " + props.entries[1].title);
-        }
-    }
-    
+
     return (
         
         <div className="matchup"> 
