@@ -1,21 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import Matchup from "./Matchup.jsx";
 
-// Bracket creates one matchup for every two movies
-// Bracket sends the two movies as an array of two movie objects [ {movie}, {movie} ]
-// React doesn't allow you to pass Javascript objects for whatever reason.  
+// Bracket creates one matchup for every two movies  
+// {title: "Boogie Nights", isWinner: true, id: 0} //
 
 function Bracket(props){
 
-    let movieList = props.items;
+    function changeIsWinner(id){
+        // Called inside of each matchup 
+        // Receives an ID of losing object, sets isWinner to false. 
+        let movieToChange = movieList[id];
+        movieToChange.isWinner = false; 
+    }
 
+    // VARIABLES: List of all items, list of advancing items, midpoint of advancing items.
+    let movieList = props.items;
+    let nextRound = movieList.filter(movie => movie.isWinner === true)
+    let middle = nextRound.length / 2;
+
+    // Creates Bracket with items evenly divided into a Left & Right Side //
     return (
-        <div>
-           { movieList.map(function(movie, index) {
-                if (index === 0 || index % 2 === 0) {
-                    return <Matchup entries={ [movieList[index], movieList[index + 1]] } />
-                }
-           }) }
+        <div className="round">
+            <div className="leftSide">
+            { nextRound.map(function(movie, index) {
+                    if (index < middle) {
+                        if (index === 0 || index % 2 === 0) {
+                            return <Matchup 
+                                entries={[nextRound[index], nextRound[index + 1]]} 
+                                key={movie.id} 
+                                id={movie.id} 
+                                handleLoser={changeIsWinner} 
+                            />
+                        }
+                    }
+            }) }
+            </div>
+
+            <div className="rightSide">
+            { nextRound.map(function(movie, index) {
+                    if (index >= middle) {
+                        if (index === 0 || index % 2 === 0) {
+                            return <Matchup 
+                                entries={[nextRound[index], nextRound[index + 1]]} 
+                                key={movie.id} 
+                                id={movie.id} 
+                                handleLoser={changeIsWinner} 
+                            />
+                        }
+                    }
+            }) }
+            </div>
         </div>
     )
 }

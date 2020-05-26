@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import Movie from "./Movie.jsx";
+import Button from '@material-ui/core/Button';
+import IosTrophyOutline from 'react-ionicons/lib/IosTrophyOutline';
 
 // Matchup receives an array of two movie objects from Bracket // 
-// A movie object looks like {title: "", year: ""} //
-
-// --- IMPLEMENTING VOTING LOGIC --- //
-// xEach matchup should have points for each movie. 
-// xIt should have a button for each movie
-// xThe button should increment the points for its movie
-// xThe matchup should keep track of the points for each movie
-// xThe Bracket component should have a WINNER button. 
-// xEach matchup should have a calculateWinner function that calculates which movie has more points.
-// The function should change the display of the higher scoring movie.
-
+// A movie object looks like {title: "Name of Movie", isWinner: true, id: uniqueID} //
 
 function Matchup(props){
     
@@ -23,49 +15,58 @@ function Matchup(props){
         float: "left",
     };
 
-    const [topPoints, setTopPoints] = useState(0);
-    const [bottomPoints, setBottomPoints] = useState(0);
+    // Keeps track of which movie is checked (winning)
+    const [checkedMovie, setCheckedMovie] = useState("Nothing");
 
-    function increaseTopScore(){
-        setTopPoints( prevCount => prevCount + 1);
-    }
-    
-    function increaseBottomScore(){
-        setBottomPoints( prevCount => prevCount + 1);
+    // Keeps track of if matchup has been decided yet.
+    const [isMatchupOpen, setMatchup] = useState(true);
+
+    function handleBoxCheck(e){
+        setCheckedMovie(e.target.value);
     }
 
-    // DOES NOT handle ties. 
+    // Calls handleLoser which changes isWinner property of losing item to false & closes mathcup. 
     function calculateWinner(){
-        if (topPoints > bottomPoints){
-            console.log("The winner is " + props.entries[0].title);
+        if (checkedMovie === props.entries[0].title) {
+            props.handleLoser(props.entries[1].id);
         } else {
-            console.log("The winner is " + props.entries[1].title);
+            props.handleLoser(props.entries[0].id);
         }
+        setMatchup(false);
     }
-    
+
     return (
+
         
         <div className="matchup"> 
-            <button onClick={calculateWinner}> Get Winner </button>
+            <Button variant="contained" color="primary" onClick={calculateWinner}> <IosTrophyOutline/> Get Winner </Button> 
             
-            <div className="topMovie">
-                <button style={btnStyle} onClick={increaseTopScore}>+</button>
+            <div>
+                <input 
+                    style={btnStyle} 
+                    type="radio"
+                    onChange={handleBoxCheck} 
+                    name={props.id} 
+                    value={props.entries[0].title} />
                 <Movie 
                     title={props.entries[0].title} 
-                    year={props.entries[0].year}
-                    />
-                <p> {topPoints} </p>
+                    isWinner={ isMatchupOpen ? false : props.entries[0].isWinner } 
+                />
             </div>
 
-            <p> Versus </p>
+            { isMatchupOpen ? <p> Versus </p> : <p> Winner is {checkedMovie}</p> }
             
-            <div className="bottomMovie">
-                <button style={btnStyle} onClick={increaseBottomScore}>+</button>
+            <div>
+                <input 
+                    style={btnStyle} 
+                    type="radio" 
+                    onChange={handleBoxCheck} 
+                    name={props.id} 
+                    value={props.entries[1].title} />
                 <Movie 
-                    title={props.entries[1].title} 
-                    year={props.entries[1].year}
-                    />
-                <p> {bottomPoints} </p>
+                    title={props.entries[1].title}
+                    isWinner={ isMatchupOpen ? false : props.entries[1].isWinner } 
+                />
             </div>
         
         </div>
@@ -74,4 +75,3 @@ function Matchup(props){
 }
 
 export default Matchup;
-

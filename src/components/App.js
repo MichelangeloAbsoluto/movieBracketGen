@@ -1,36 +1,48 @@
-import React from 'react';
+import React, { State, useState } from 'react';
 import '../App.css';
-
-// -- These are the 3 modules I created -- //
 import Movie from "./Movie.jsx";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import Bracket from "./Bracket.jsx";
+import EntryForm from "./EntryForm.jsx";
 
-// -- A hardcoded list of movies to use -- //
-const movieList = [
-  {title: "Boogie Nights", year: 1997},
-  {title: "The Notebook", year: 2004},
-  {title: "Zoolander", year: 2001},
-  {title: "Grown Ups", year: 2010},
-  {title: "Grown Ups 2", year: 2013},
-  {title: "Goodfellas", year: 1990},
-  {title: "Gladiator", year: 2000},
-  {title: "Sisterhood of the Traveling Pants", year: 2005},
-  {title: "Sisterhood of the Traveling Pants 2", year: 2008},
-  {title: "In the Mood For Love", year: 2000},
-  {title: "Carlito's Way", year: 1993},
-  {title: "Lord of the Rings: The Return of the King", year: 2003}
-]
 
 function App() {
+  
+// The list of items for bracket. Default value is a list of example objects. //
+const [itemList, setItemList] = useState([
+  {title: "Example", isWinner: true, id: 0, key:  0},
+  {title: "Other Example", isWinner: true, id: 1, key:  1},
+  {title: "Big Example", isWinner: true, id: 2, key:  2},
+  {title: "Underdog Example", isWinner: true, id: 3, key:  3}
+]);
+
+const [isInputVisible, setInputVisibility] = useState(true);
+
+// Populates ItemList with entries from textarea. --//
+function populateBracket(array){
+  let newItemList = [];
+  for (var i = 0; i < array.length; i++) {
+    newItemList.push({
+      title: array[i],
+      isWinner: true,
+      id: i,
+      key: i
+    });
+  }
+  setItemList(newItemList);  
+  setInputVisibility(false);
+}
+
   return (
     <div className="App">
       <Header />
-      <Bracket items={movieList}/>
+      { isInputVisible ? <EntryForm submitEntries={populateBracket}/> : null }
+      <Bracket items={itemList} />
       <Footer />
     </div>
-  );
+  ) 
+
 }
 
 export default App;
